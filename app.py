@@ -33,6 +33,10 @@ with server.app_context():
         "select * from openvancoverpolicedata.opvd_type_neighbourhood_num_df_cleaned_data order by year", dbConnection)
     districtwise_highcrimerate_df = pd.read_sql(
         "select * from openvancoverpolicedata.opvd_districtwise_highcrimerate", dbConnection)
+    opvd_holiday_crime_data_df = pd.read_sql(
+        "select * from openvancoverpolicedata.opvd_holiday_crime_data order by df1_year", dbConnection)
+    opvd_mostcrime_data_df = pd.read_sql(
+        "select * from openvancoverpolicedata.opvd_mostcrime_data order by year", dbConnection)
     dbConnection.close()
 
 app.layout = html.Div([
@@ -195,6 +199,10 @@ def make_bars(year_given, interval):
 
     # Histogram
     fig_histogram = px.histogram(districtwise_highcrimerate_df, x="District", y=["2020", "2021", "2022"], barmode='group', title="Total Crime Count Per District for the years 2020-2022")
+    
+    fig_multiline = px.line(opvd_holiday_crime_data_df, x="df1_year", y="sum(counts)", color='holiday')
+    
+    fig_histogram_block = px.histogram(opvd_mostcrime_data_df, x="hundred_block", y="count_sum", barmode='group', color='year', title="Total Crime Count Per Hundred Block for the years 2020-2022")
 
     return [
         html.Div([
@@ -213,11 +221,14 @@ def make_bars(year_given, interval):
             html.Div([dcc.Graph(figure=fig_line_hour)],
                      className="twelve columns"),
         ], className="row"),
-        # html.Div([
-        #     html.Div([dcc.Graph(figure=fig_histogram)], className="six columns"),
-        # ], className="row"),
+        
         html.Div([
-            html.Div([dcc.Graph(figure=fig_histogram)]),
+            html.Div([dcc.Graph(figure=fig_histogram)], className="six columns"),
+            html.Div([dcc.Graph(figure=fig_histogram_block)], className="six columns"),
+        ], className="row"),
+        
+        html.Div([
+            html.Div([dcc.Graph(figure=fig_multiline)]),
         ], className="row"),
         
         html.H5("The Folium Map depicts the most Crime Hit Hundred_Blocks in District 2(The Least Total Crime Count district since 2020-2022)"),
