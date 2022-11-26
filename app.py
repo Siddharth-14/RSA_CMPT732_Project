@@ -137,7 +137,7 @@ def make_prediction(submit_val, input_year, input_month, input_hour, input_neigh
             open('neighbourhood_label.pkl', 'rb'))
         pickled_hundred_block_label = pickle.load(
             open('hundred_block_label.pkl', 'rb'))
-        if (input_neighbourhood not in pickled_neighbourhood_label) or (input_hundred_block not in pickled_hundred_block_label) or input_month > 12 or input_month < 1 or input_hour > 23 and input_hour < 0 or input_year < 2003:
+        if (input_neighbourhood not in pickled_neighbourhood_label) or (input_hundred_block not in pickled_hundred_block_label) or input_month > 12 or input_month < 1 or input_hour > 23 or input_hour < 0 or input_year < 2003:
             return [
                 html.H2("Wrong Input", style={
                     "textAlign": "center"}),
