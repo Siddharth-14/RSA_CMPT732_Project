@@ -34,7 +34,7 @@ with server.app_context():
     districtwise_highcrimerate_df = pd.read_sql(
         "select * from openvancoverpolicedata.opvd_districtwise_highcrimerate", dbConnection)
     opvd_holiday_crime_data_df = pd.read_sql(
-        "select * from openvancoverpolicedata.opvd_holiday_crime_data order by df1_year", dbConnection)
+        "select * from openvancoverpolicedata.opvd_holiday_crime_data order by year", dbConnection)
     opvd_mostcrime_data_df = pd.read_sql(
         "select * from openvancoverpolicedata.opvd_mostcrime_data order by year", dbConnection)
     dbConnection.close()
