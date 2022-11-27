@@ -40,7 +40,7 @@ with server.app_context():
     dbConnection.close()
 
 app.layout = html.Div([
-    html.H1("Analytics Dashboard of Vancover Police Department (Dash Plotly)", style={
+    html.H1("Analytics Dashboard Of Vancouver Police Department", style={
             "textAlign": "center"}),
     html.Hr(),
     html.Div(children=[
@@ -200,9 +200,9 @@ def make_bars(year_given, interval):
     # Histogram
     fig_histogram = px.histogram(districtwise_highcrimerate_df, x="District", y=["2020", "2021", "2022"], barmode='group', title="Total Crime Count Per District for the years 2020-2022")
     
-    fig_multiline = px.line(opvd_holiday_crime_data_df, x="df1_year", y="sum(counts)", color='holiday')
+    fig_multiline = px.line(opvd_holiday_crime_data_df, x="Year", y="Count Of Crimes On Holidays", color='Holiday', title="Crimes On The Three holidays For The Year 2003 - 2022")
     
-    fig_histogram_block = px.histogram(opvd_mostcrime_data_df, x="hundred_block", y="count_sum", barmode='group', color='year', title="Total Crime Count Per Hundred Block for the years 2020-2022")
+    fig_histogram_block = px.histogram(opvd_mostcrime_data_df, x="District", y="Total Crime", barmode='group', color='Year', title="Total Crime Count Per District For The Last Three Years 2018-2022")
 
     return [
         html.Div([
